@@ -13,17 +13,24 @@ class MainController extends Controller
 
     public function categories()
     {
-        return view('categories');
+        $categories = Category::all();
+        return view('categories', compact('categories'));
     }
+
     public function category($code)
     {
         $category = Category::where('code', $code)->first();
+
         return view('category', compact('category'));
     }
 
-    public function product($product = null)
+    public function product($category, $product = null)
     {
-//        dump($product);die();
-        return view('product', ['product' => $product]);
+        return view('product', ['product' => $product, 'category' => $category]);
+    }
+
+    public function basketPlace()
+    {
+        return view('order');
     }
 }
