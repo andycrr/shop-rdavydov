@@ -7,6 +7,7 @@ use App\Models\Product;
 
 class MainController extends Controller
 {
+
     public function index()
     {
         $products = Product::get();
@@ -31,8 +32,4 @@ class MainController extends Controller
         return view('product', ['product' => $product, 'category' => $category]);
     }
 
-    public function basketPlace()
-    {
-        return view('order');
-    }
 }
