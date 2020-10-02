@@ -1,4 +1,4 @@
-@extends('master')
+@extends('layouts.master')
 
 @section('title', 'Корзина')
 @php
@@ -7,21 +7,20 @@
  */
 @endphp
 @section('content')
-    <div class="starter-template">
-        <h1>Корзина</h1>
-        <p>Оформление заказа</p>
-        <div class="panel">
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th>Название</th>
-                    <th>Кол-во</th>
-                    <th>Цена</th>
-                    <th>Стоимость</th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach($order->products as $product)
+    <h1>Корзина</h1>
+    <p>Оформление заказа</p>
+    <div class="panel">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Название</th>
+                <th>Кол-во</th>
+                <th>Цена</th>
+                <th>Стоимость</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach($order->products as $product)
                 <tr>
                     <td>
                         <a href="{{route('product', ['category' => $product->category->code,'product' => $product->code])}}">
@@ -30,7 +29,7 @@
                         </a>
                     </td>
                     <td><span class="badge">{{$product->pivot->count}}</span>
-                        <div class="btn-group">
+                        <div class="btn-group form-inline">
                             <form action="{{route('basket-add', $product->id)}}" method="post">
                                 @csrf
                                 <button type="submit" class="btn btn-success" href="#"><span
@@ -46,17 +45,16 @@
                     <td>{{$product->price}}</td>
                     <td>{{$product->getPriceForCount()}}</td>
                 </tr>
-                @endforeach
-                <tr>
-                    <td colspan="3">Общая стоимость:</td>
-                    <td>{{$order->getFullPrice()}}</td>
-                </tr>
-                </tbody>
-            </table>
-            <br>
-            <div class="btn-group pull-right" role="group">
-                <a type="button" class="btn btn-success" href="http://laravel-diplom-1.rdavydov.ru/basket/place">Оформить заказ</a>
-            </div>
+            @endforeach
+            <tr>
+                <td colspan="3">Общая стоимость:</td>
+                <td>{{$order->getFullPrice()}}</td>
+            </tr>
+            </tbody>
+        </table>
+        <br>
+        <div class="btn-group pull-right" role="group">
+            <a type="button" class="btn btn-success" href="{{route('basket-place')}}">Оформить заказ</a>
         </div>
     </div>
 @endsection
